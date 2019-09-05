@@ -57,6 +57,8 @@ def db_span(sql_statement,
         operation = sql_statement
         add_sql_tag = False
     else:
+        if isinstance(statement, bytes):
+            statement = statement.decode('utf-8')
         space_idx = statement.find(' ')
         if space_idx == -1:
             operation = ''  # unrecognized format of the query
