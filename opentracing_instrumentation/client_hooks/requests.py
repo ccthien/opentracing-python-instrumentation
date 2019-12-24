@@ -52,6 +52,10 @@ def install_patches(response_handler_hook=None):
         """Wraps HTTPAdapter.send"""
 
         request_wrapper = RequestWrapper(request=request)
+
+        if request.headers['Jaeger-Report']=='true':
+            return _HTTPAdapter_send(self, request, **kwargs)
+
         span = before_http_request(
             request=request_wrapper,
             current_span_extractor=get_current_span)
